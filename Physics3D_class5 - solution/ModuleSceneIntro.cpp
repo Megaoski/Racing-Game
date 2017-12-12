@@ -49,8 +49,13 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 void ModuleSceneIntro::CreateStraight(vec3 pos)
 {
 	Cube c1(3, 2, 3);
-	c1.SetPos(0, 0, 0);
-	App->physics->AddBody();
+	c1.SetPos.
+	App->physics->AddBody(c1, 1.0f);
 	c1.Render();
 
+}
+
+void ModuleSceneIntro::CreateMap(vec3 pos)
+{
+	CreateStraight()
 }

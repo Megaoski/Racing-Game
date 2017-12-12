@@ -21,6 +21,7 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	void CreateStraight(vec3 pos);
+	void CreateMap(vec3 pos);
 
 public:
 	
