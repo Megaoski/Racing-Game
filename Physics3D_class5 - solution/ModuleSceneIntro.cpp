@@ -21,6 +21,8 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
+	CreateMap(vec3(0,0,0));
+
 	return ret;
 }
 
@@ -39,6 +41,11 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.axis = true;
 	p.Render();
 
+	
+	PaintMap(vec3(0,0,0));
+	
+	
+
 	return UPDATE_CONTINUE;
 }
 
@@ -49,13 +56,31 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 void ModuleSceneIntro::CreateStraight(vec3 pos)
 {
 	Cube c1(3, 2, 3);
-	/*c1.SetPos.*/
+	
+	c1.SetPos(pos.x, pos.y, pos.z);
+	
 	App->physics->AddBody(c1, 1.0f);
-	c1.Render();
 
+	
+	
+
+}
+
+void ModuleSceneIntro::PaintStraight(vec3 pos)
+{
+	Cube c1(3, 2, 3);
+
+	c1.SetPos(pos.x, pos.y + 1, pos.z);
+
+	c1.Render();
 }
 
 void ModuleSceneIntro::CreateMap(vec3 pos)
 {
-	/*CreateStraight()*/
+	CreateStraight(vec3(0,0,0));
+}
+
+void ModuleSceneIntro::PaintMap(vec3 pos)
+{
+	PaintStraight(vec3(0,0,0));
 }
