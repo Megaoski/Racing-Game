@@ -18,10 +18,15 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
+	App->camera->Move(vec3(3.0f, 3.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	CreateMap(vec3(0,0,0));
+
+	for (p2List_item<Cube>* item = parts.getFirst(); item; item = item->next)
+	{
+		App->physics->AddBody(item->data, 0);
+	}
 
 	return ret;
 }
@@ -41,8 +46,11 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.axis = true;
 	p.Render();
 
+	for (p2List_item<Cube>* item = parts.getFirst(); item; item = item->next)
+	{
+		item->data.Render();
+	}
 	
-	PaintMap(vec3(0,0,0));
 	
 	
 
@@ -53,34 +61,14 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 }
 
-void ModuleSceneIntro::CreateStraight(vec3 pos)
-{
-	Cube c1(3, 2, 3);
-	
-	c1.SetPos(pos.x, pos.y, pos.z);
-	
-	App->physics->AddBody(c1, 1.0f);
-
-	
-	
-
-}
-
-void ModuleSceneIntro::PaintStraight(vec3 pos)
-{
-	Cube c1(3, 2, 3);
-
-	c1.SetPos(pos.x, pos.y + 1, pos.z);
-
-	c1.Render();
-}
 
 void ModuleSceneIntro::CreateMap(vec3 pos)
 {
-	CreateStraight(vec3(0,0,0));
-}
+	Cube part1(20, 5, 130);
+	part1.SetPos(0, 0, 60);
+	parts.add(part1);
 
-void ModuleSceneIntro::PaintMap(vec3 pos)
-{
-	PaintStraight(vec3(0,0,0));
+	Cube part2(10, 5, 10);
+	part2.SetPos(65, 0, 0);
+	parts.add(part2);
 }

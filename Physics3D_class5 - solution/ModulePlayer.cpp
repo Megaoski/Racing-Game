@@ -97,7 +97,7 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 12, 10);
+	vehicle->SetPos(0, 12, 0);
 	
 	return true;
 }
@@ -136,6 +136,20 @@ update_status ModulePlayer::Update(float dt)
 	{
 		brake = BRAKE_POWER;
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN) //changing camera view
+	{
+		
+		App->camera->test = false;
+		cameracounter++;
+
+		if (cameracounter == 2)
+		{
+			App->camera->test = true;
+			cameracounter = 0;
+		}
+	}
+	
 
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
