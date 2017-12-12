@@ -53,6 +53,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>C:\Users\oscarll3\Documents\GitHub\Racing-Game\Physics3D_class5 - solution\SDL\libx86;C:\Users\oscarll3\Documents\GitHub\Racing-Game\Physics3D_class5 - solution\SDL_mixer\libx86;C:\Users\oscarll3\Documents\GitHub\Racing-Game\Physics3D_class5 - solution\Bullet\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -71,6 +72,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Windows</SubSystem>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <AdditionalLibraryDirectories>C:\Users\oscarll3\Documents\GitHub\Racing-Game\Physics3D_class5 - solution\SDL\libx86;C:\Users\oscarll3\Documents\GitHub\Racing-Game\Physics3D_class5 - solution\SDL_mixer\libx86;C:\Users\oscarll3\Documents\GitHub\Racing-Game\Physics3D_class5 - solution\Bullet\libx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
