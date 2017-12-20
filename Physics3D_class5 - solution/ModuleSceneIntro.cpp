@@ -79,7 +79,7 @@ void ModuleSceneIntro::CreateMap(vec3 pos)
 	part3.color = Grey;
 	parts.add(part3);
 
-	Cube part4(150, 5, 20);
+	Cube part4(130, 5, 20);
 	part4.SetPos(-65, 0,-15);
 	part4.color = Grey;
 	parts.add(part4);
