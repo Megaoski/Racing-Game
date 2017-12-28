@@ -1,5 +1,4 @@
 #include "PhysBody3D.h"
-#include "glmath.h"
 #include "Bullet/include/btBulletDynamicsCommon.h"
 
 // =================================================
@@ -44,4 +43,15 @@ void PhysBody3D::SetPos(float x, float y, float z)
 	btTransform t = body->getWorldTransform();
 	t.setOrigin(btVector3(x, y, z));
 	body->setWorldTransform(t);
+}
+
+vec3 PhysBody3D::GetPos()
+{
+	vec3 position;
+	btVector3 position2 = body->getCenterOfMassPosition();
+	position.x = position2.getX();
+	position.y = position2.getY();
+	position.z = position2.getZ();
+
+	return position;
 }

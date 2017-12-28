@@ -150,6 +150,10 @@ update_status ModulePlayer::Update(float dt)
 		}
 	}
 	
+	if (vehicle->GetPos().y < 0)
+	{
+		VehicleFall();
+	}
 
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
@@ -162,6 +166,11 @@ update_status ModulePlayer::Update(float dt)
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
+}
+
+void ModulePlayer::VehicleFall()
+{
+	
 }
 
 

@@ -5,6 +5,9 @@
 #include "PhysBody3D.h"
 #include "ModulePhysics3D.h"
 
+#define SIZE_ARRAY(_A_) (sizeof(_A_)/sizeof(_a_[0]))
+
+
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 }
@@ -18,8 +21,7 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	App->camera->Move(vec3(3.0f, 3.0f, 0.0f));
-	App->camera->LookAt(vec3(0, 0, 0));
+	
 
 	CreateMap(vec3(0,0,0));
 
