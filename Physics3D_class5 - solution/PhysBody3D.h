@@ -21,6 +21,7 @@ public:
 	void SetPos(float x, float y, float z);
 	vec3 GetPos();
 	void SetAsSensor(bool is_sensor);
+	bool IsSensor() const;
 
 private:
 	btRigidBody* body = nullptr;

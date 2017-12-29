@@ -95,7 +95,7 @@ bool ModulePlayer::Start()
 	car.wheels[3].drive = false;
 	car.wheels[3].brake = true;
 	car.wheels[3].steering = false;
-
+	
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(0, 12, 0);
 	
@@ -152,7 +152,7 @@ update_status ModulePlayer::Update(float dt)
 	
 	if (vehicle->GetPos().y < 0)
 	{
-		VehicleFall();
+		
 	}
 
 	vehicle->ApplyEngineForce(acceleration);
@@ -168,10 +168,7 @@ update_status ModulePlayer::Update(float dt)
 	return UPDATE_CONTINUE;
 }
 
-void ModulePlayer::VehicleFall()
-{
-	
-}
+
 
 
 

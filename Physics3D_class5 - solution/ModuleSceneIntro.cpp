@@ -4,6 +4,9 @@
 #include "Primitive.h"
 #include "PhysBody3D.h"
 #include "ModulePhysics3D.h"
+#include "ModulePlayer.h"
+#include "PhysVehicle3D.h"
+
 
 #define SIZE_ARRAY(_A_) (sizeof(_A_)/sizeof(_a_[0]))
 
@@ -25,6 +28,13 @@ bool ModuleSceneIntro::Start()
 
 	CreateMap(vec3(0,0,0));
 
+	sensorino.size = vec3(20, 5, 130);
+	sensorino.SetPos(22,0,60);
+
+	sensor = App->physics->AddBody(sensorino, 0.0f);
+	sensor->SetAsSensor(true);
+	sensor->collision_listeners.add(this);
+	
 	for (p2List_item<Cube>* item = parts.getFirst(); item; item = item->next)
 	{
 		App->physics->AddBody(item->data, 0);
@@ -48,6 +58,9 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.axis = true;
 	p.Render();
 
+	sensorino.color = Red;
+	sensorino.Render();
+
 	for (p2List_item<Cube>* item = parts.getFirst(); item; item = item->next)
 	{
 		item->data.Render();
@@ -61,6 +74,13 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
+	/*LOG("HIT!");*/
+	if (sensor == body1)
+	{
+		App->player->vehicle->SetPos(0, 12, 0);
+		/*App->player->vehicle->SetTransform(0,0,0);*/
+		App->player->acceleration = 0.0f;
+	}
 }
 
 

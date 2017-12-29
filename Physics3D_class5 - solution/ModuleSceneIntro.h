@@ -6,8 +6,10 @@
 
 
 
+
 struct PhysBody3D;
 struct PhysMotor3D;
+
 
 class ModuleSceneIntro : public Module
 {
@@ -38,4 +40,8 @@ public:
 	PhysMotor3D* right_wheel;
 
 	p2List<Cube> parts;
+
+	Cube sensorino;
+	PhysBody3D* sensor;
+
 };

@@ -71,3 +71,8 @@ void PhysBody3D::SetAsSensor(bool is_sensor)
 
 	}
 }
+
+bool PhysBody3D::IsSensor() const
+{
+	return is_sensor;
+}
