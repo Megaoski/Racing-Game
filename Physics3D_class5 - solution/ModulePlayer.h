@@ -21,7 +21,7 @@ public:
 	
 
 public:
-
+	vec3 initial_pos;//Initial position for the vehicle
 	PhysVehicle3D* vehicle;
 	float turn;
 	float acceleration;

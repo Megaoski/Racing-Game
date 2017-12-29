@@ -23,6 +23,7 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	void CreateMap(vec3 pos);
+	void VehicleHasFallen();
 
 public:
 	

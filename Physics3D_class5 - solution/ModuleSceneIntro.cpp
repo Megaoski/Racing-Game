@@ -77,9 +77,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	/*LOG("HIT!");*/
 	if (sensor == body1)
 	{
-		App->player->vehicle->SetPos(0, 12, 0);
-		/*App->player->vehicle->SetTransform(0,0,0);*/
-		App->player->acceleration = 0.0f;
+		VehicleHasFallen();
 	}
 }
 
@@ -106,4 +104,13 @@ void ModuleSceneIntro::CreateMap(vec3 pos)
 	part4.color = Grey;
 	parts.add(part4);
 
+}
+
+void ModuleSceneIntro::VehicleHasFallen()
+{
+	App->player->vehicle->SetPos(App->player->initial_pos.x, App->player->initial_pos.y, App->player->initial_pos.z);
+	App->player->vehicle->SetTransform(IdentityMatrix.M);
+	App->player->brake = BRAKE_POWER;
+	/*App->player->vehicle->*/
+	
 }

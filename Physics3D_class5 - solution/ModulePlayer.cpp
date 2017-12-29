@@ -18,6 +18,7 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
+	initial_pos = { 0, 12, 0};
 	VehicleInfo car;
 
 	// Car properties ----------------------------------------
