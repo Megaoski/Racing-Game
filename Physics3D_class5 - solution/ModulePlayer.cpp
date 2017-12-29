@@ -18,7 +18,7 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
-	initial_pos = { 0, 12, 0};
+	initial_pos = { 0, 17, 0};
 	VehicleInfo car;
 
 	// Car properties ----------------------------------------
@@ -98,7 +98,7 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 	
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 12, 0);
+	vehicle->SetPos(initial_pos.x,initial_pos.y, initial_pos.z);
 	
 	return true;
 }

@@ -28,7 +28,8 @@ bool ModuleSceneIntro::Start()
 
 	CreateMap(vec3(0,0,0));
 
-	sensorino.size = vec3(20, 5, 130);
+	//Creating the big ground sensor 
+	sensorino.size = vec3(100, 1, 130);
 	sensorino.SetPos(22,0,60);
 
 	sensor = App->physics->AddBody(sensorino, 0.0f);
@@ -54,11 +55,11 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	Plane p(0, 1, 0, 0);
+	/*Plane p(0, 1, 0, 0);
 	p.axis = true;
 	p.Render();
-
-	sensorino.color = Red;
+*/
+	sensorino.color = Red;//Comment to hide the big sensor
 	sensorino.Render();
 
 	for (p2List_item<Cube>* item = parts.getFirst(); item; item = item->next)
@@ -85,22 +86,22 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 void ModuleSceneIntro::CreateMap(vec3 pos)
 {
 	Cube part1(20, 5, 130);
-	part1.SetPos(0, 0, 60);
+	part1.SetPos(0, 5, 60);
 	part1.color = Grey;
 	parts.add(part1);
 
 	Cube part2(130, 5, 20);
-	part2.SetPos(-55, 0, 130);
+	part2.SetPos(-55, 5, 130);
 	part2.color = Grey;
 	parts.add(part2);
 
 	Cube part3(20, 5, 130);
-	part3.SetPos(-130, 0, 75);
+	part3.SetPos(-130, 5, 75);
 	part3.color = Grey;
 	parts.add(part3);
 
 	Cube part4(130, 5, 20);
-	part4.SetPos(-65, 0,-15);
+	part4.SetPos(-65, 5,-15);
 	part4.color = Grey;
 	parts.add(part4);
 
@@ -108,9 +109,12 @@ void ModuleSceneIntro::CreateMap(vec3 pos)
 
 void ModuleSceneIntro::VehicleHasFallen()
 {
-	App->player->vehicle->SetPos(App->player->initial_pos.x, App->player->initial_pos.y, App->player->initial_pos.z);
 	App->player->vehicle->SetTransform(IdentityMatrix.M);
+	App->player->vehicle->SetPos(App->player->initial_pos.x, App->player->initial_pos.y, App->player->initial_pos.z);
+	
+	App->player->vehicle->body->setLinearVelocity(btVector3(0,0,0));
+	App->player->vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
 	App->player->brake = BRAKE_POWER;
-	/*App->player->vehicle->*/
+	
 	
 }

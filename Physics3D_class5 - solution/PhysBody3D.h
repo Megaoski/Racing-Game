@@ -24,11 +24,11 @@ public:
 	bool IsSensor() const;
 
 private:
-	btRigidBody* body = nullptr;
 	bool is_sensor = false;
 
 public:
 	p2List<Module*> collision_listeners;
+	btRigidBody* body = nullptr;
 };
 
 #endif // __PhysBody3D_H__
