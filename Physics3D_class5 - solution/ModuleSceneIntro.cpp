@@ -27,6 +27,7 @@ bool ModuleSceneIntro::Start()
 	
 
 	CreateMap(vec3(0,0,0));
+	CreateRamps();
 
 	//Creating the big ground sensor 
 	sensorino.size = vec3(1000, 1, 1300);
@@ -37,6 +38,11 @@ bool ModuleSceneIntro::Start()
 	sensor->collision_listeners.add(this);
 	
 	for (p2List_item<Cube>* item = parts.getFirst(); item; item = item->next)
+	{
+		App->physics->AddBody(item->data, 0);
+	}
+
+	for (p2List_item<Cube>* item = ramps.getFirst(); item; item = item->next)
 	{
 		App->physics->AddBody(item->data, 0);
 	}
@@ -67,6 +73,10 @@ update_status ModuleSceneIntro::Update(float dt)
 		item->data.Render();
 	}
 	
+	for (p2List_item<Cube>* item = ramps.getFirst(); item; item = item->next)
+	{
+		item->data.Render();
+	}
 	
 	
 
@@ -105,12 +115,21 @@ void ModuleSceneIntro::CreateMap(vec3 pos)
 	part4.color = Grey;
 	parts.add(part4);
 
-	/*Cube part5(160, 5, 20);
-	part5.SetPos(-350, 5, 1110);
+	Cube part5(160, 5, 20);
+	part5.SetPos(-410, 5, 65);
 	part5.color = Grey;
-	parts.add(part5);*/
+	parts.add(part5);
 	
 
+}
+
+void ModuleSceneIntro::CreateRamps()
+{
+	Cube ramp1(20, 5, 30);
+	ramp1.SetPos(0, 5, 20);
+	ramp1.SetRotation(-12, vec3(1, 0, 0));
+	ramp1.color = Blue;
+	ramps.add(ramp1);
 }
 
 void ModuleSceneIntro::VehicleHasFallen()
