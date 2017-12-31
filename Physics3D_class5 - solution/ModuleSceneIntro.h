@@ -23,6 +23,7 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	void CreateMap(vec3 pos);
+	void CreateRamps();
 	void VehicleHasFallen();
 
 public:
@@ -40,7 +41,9 @@ public:
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
 
+	//-----------------------------
 	p2List<Cube> parts;
+	p2List<Cube> ramps;
 
 	Cube sensorino;
 	PhysBody3D* sensor;
