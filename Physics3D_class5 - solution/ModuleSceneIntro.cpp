@@ -29,7 +29,7 @@ bool ModuleSceneIntro::Start()
 	CreateMap(vec3(0,0,0));
 
 	//Creating the big ground sensor 
-	sensorino.size = vec3(100, 1, 130);
+	sensorino.size = vec3(1000, 1, 1300);
 	sensorino.SetPos(22,0,60);
 
 	sensor = App->physics->AddBody(sensorino, 0.0f);
@@ -85,25 +85,31 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 
 void ModuleSceneIntro::CreateMap(vec3 pos)
 {
-	Cube part1(20, 5, 130);
-	part1.SetPos(0, 5, 60);
+	Cube part1(20, 5, 160);
+	part1.SetPos(0, 5, 75);
 	part1.color = Grey;
 	parts.add(part1);
 
-	Cube part2(130, 5, 20);
-	part2.SetPos(-55, 5, 130);
+	Cube part2(160, 5, 20);
+	part2.SetPos(-70, 5, 165);
 	part2.color = Grey;
 	parts.add(part2);
 
-	Cube part3(20, 5, 130);
-	part3.SetPos(-130, 5, 75);
+	Cube part3(160, 5, 20);
+	part3.SetPos(-230, 5, 165);
 	part3.color = Grey;
 	parts.add(part3);
 
-	Cube part4(130, 5, 20);
-	part4.SetPos(-65, 5,-15);
+	Cube part4(20, 5, 120);
+	part4.SetPos(-320, 5, 115);
 	part4.color = Grey;
 	parts.add(part4);
+
+	/*Cube part5(160, 5, 20);
+	part5.SetPos(-350, 5, 1110);
+	part5.color = Grey;
+	parts.add(part5);*/
+	
 
 }
 
