@@ -26,16 +26,19 @@ bool ModuleSceneIntro::Start()
 
 	
 
-	CreateMap(vec3(0,0,0));
+	CreateMap();
 	CreateRamps();
+	
 
 	//Creating the big ground sensor 
-	sensorino.size = vec3(1000, 1, 1300);
-	sensorino.SetPos(22,0,60);
+	bigsensorino.size = vec3(1000, 1, 1300);
+	bigsensorino.SetPos(22,0,60);
 
-	sensor = App->physics->AddBody(sensorino, 0.0f);
-	sensor->SetAsSensor(true);
-	sensor->collision_listeners.add(this);
+	bigsensor = App->physics->AddBody(bigsensorino, 0.0f);
+	bigsensor->SetAsSensor(true);
+	bigsensor->collision_listeners.add(this);
+
+	
 	
 	for (p2List_item<Cube>* item = parts.getFirst(); item; item = item->next)
 	{
@@ -46,6 +49,8 @@ bool ModuleSceneIntro::Start()
 	{
 		App->physics->AddBody(item->data, 0);
 	}
+
+	
 
 	return ret;
 }
@@ -65,8 +70,9 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.axis = true;
 	p.Render();
 */
-	sensorino.color = Red;//Comment to hide the big sensor
-	sensorino.Render();
+	bigsensorino.color = Red;//Comment to hide the big sensor
+	bigsensorino.Render();
+
 
 	for (p2List_item<Cube>* item = parts.getFirst(); item; item = item->next)
 	{
@@ -86,14 +92,19 @@ update_status ModuleSceneIntro::Update(float dt)
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 	/*LOG("HIT!");*/
-	if (sensor == body1)
+	if (bigsensor == body1)
+	{
+		VehicleHasFallen();
+	}
+
+	if (sensors[0] == body1)
 	{
 		VehicleHasFallen();
 	}
 }
 
 
-void ModuleSceneIntro::CreateMap(vec3 pos)
+void ModuleSceneIntro::CreateMap()
 {
 	Cube part1(20, 5, 160);
 	part1.SetPos(0, 5, 75);
@@ -125,11 +136,28 @@ void ModuleSceneIntro::CreateMap(vec3 pos)
 
 void ModuleSceneIntro::CreateRamps()
 {
-	Cube ramp1(20, 5, 30);
+	Cube ramp1(20, 3, 30);
 	ramp1.SetPos(0, 5, 20);
 	ramp1.SetRotation(-12, vec3(1, 0, 0));
 	ramp1.color = Blue;
-	ramps.add(ramp1);
+	ramps.add(ramp1);//adding ramp to the list
+	CreateRampSensors(ramp1);
+
+	
+	
+}
+
+void ModuleSceneIntro::CreateRampSensors(Cube& cube)
+{
+	sensors[0] = App->physics->AddBody(cube, 0.0f);
+	sensors[0]->SetAsSensor(true);
+	sensors[0]->collision_listeners.add(this);
+}
+
+void ModuleSceneIntro::CreateExternalSensors()
+{
+	
+
 }
 
 void ModuleSceneIntro::VehicleHasFallen()

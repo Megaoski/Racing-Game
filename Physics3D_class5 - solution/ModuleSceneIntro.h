@@ -22,8 +22,10 @@ public:
 	bool CleanUp();
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
-	void CreateMap(vec3 pos);
+	void CreateMap();
 	void CreateRamps();
+	void CreateRampSensors(Cube& cube);
+	void CreateExternalSensors();
 	void VehicleHasFallen();
 
 public:
@@ -44,8 +46,14 @@ public:
 	//-----------------------------
 	p2List<Cube> parts;
 	p2List<Cube> ramps;
+	
 
-	Cube sensorino;
-	PhysBody3D* sensor;
+	PhysBody3D* sensors[10]; // array para los sensores de las rampas
+
+	Cube bigsensorino;
+	PhysBody3D* bigsensor;
+
+	
+	
 
 };
