@@ -99,7 +99,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 
 	if (sensors[0] == body1)
 	{
-		VehicleHasFallen();
+		Turbo();
 	}
 }
 
@@ -170,4 +170,10 @@ void ModuleSceneIntro::VehicleHasFallen()
 	App->player->brake = BRAKE_POWER;
 	
 	
+}
+
+void ModuleSceneIntro::Turbo()
+{
+	App->player->vehicle->body->setLinearVelocity(btVector3(0, 10, 30));
+	App->player->vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
 }

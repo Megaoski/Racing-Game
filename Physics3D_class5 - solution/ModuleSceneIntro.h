@@ -27,6 +27,7 @@ public:
 	void CreateRampSensors(Cube& cube);
 	void CreateExternalSensors();
 	void VehicleHasFallen();
+	void Turbo();
 
 public:
 	
