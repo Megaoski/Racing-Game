@@ -35,14 +35,12 @@ bool ModuleSceneIntro::Start()
 	bigsensor->collision_listeners.add(this);
 
 	
-	
 	for (p2List_item<Cube>* item = parts.getFirst(); item; item = item->next)
 	{
 		App->physics->AddBody(item->data, 0);
 	}
 
 	
-
 	
 	return ret;
 }
@@ -71,10 +69,7 @@ update_status ModuleSceneIntro::Update(float dt)
 		item->data.Render();
 		LOG("PINTA LAS ROADS");
 	}
-	
-	
-	
-	
+		
 
 	return UPDATE_CONTINUE;
 }
@@ -87,24 +82,20 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		VehicleHasFallen();
 	}
 
-	if (sensors[0] == body1)
+	for (int i = 0; i < 10; i++)
 	{
-		Turbo();
+		if (sensors[i] == body1)
+		{
+			Turbo();
+		}
 	}
 }
 
 
-Cube ModuleSceneIntro::CreateRamps(float w, float h, float d, float x, float y, float z, float angle, const vec3 &u, Color color)
-{
-	//Cube ramp1(20, 3, 30);
-	//ramp1.SetPos(0, 5, 20);
-	//ramp1.SetRotation(-12, vec3(1, 0, 0));
-	//ramp1.color = Blue;
-	//parts.add(ramp1);//adding ramp to the list
-	//CreateRampSensors(ramp1, 0, 0, true);
-	
-	Cube example(w, h, d);
-	example.SetPos(x, y, z);
+Cube ModuleSceneIntro::CreateRamps(vec3 measures, vec3 position, float angle, const vec3 &u, Color color)
+{	
+	Cube example(measures.x, measures.y, measures.z);
+	example.SetPos(position.x, position.y, position.z);
 	example.SetRotation(angle, u);
 	example.color = color;
 	parts.add(example);
@@ -116,11 +107,22 @@ Cube ModuleSceneIntro::CreateRamps(float w, float h, float d, float x, float y, 
 	
 }
 
+
 void ModuleSceneIntro::CreateRampSensors(Cube& cube, float mass, uint i, bool set_the_sensor)
 {
 	sensors[i] = App->physics->AddBody(cube, mass);
 	sensors[i]->SetAsSensor(set_the_sensor);
 	sensors[i]->collision_listeners.add(this);
+}
+
+Cube ModuleSceneIntro::CreateRoads(vec3 measures, vec3 position, Color color)
+{
+	Cube example(measures.x, measures.y, measures.z);
+	example.SetPos(position.x, position.y,position.z);
+	example.color = color;
+	parts.add(example);
+
+	return example;
 }
 
 //void ModuleSceneIntro::CreateExternalSensors()
@@ -150,38 +152,14 @@ void ModuleSceneIntro::Turbo()
 void ModuleSceneIntro::CreateMap()//need to minimize this function
 {
 
-	Cube ramp1 = CreateRamps(20, 3, 30, 0, 5, 20, -12, { 1, 0, 0 }, Blue);
+	Cube ramp1 = CreateRamps({ 20, 3, 30 }, { 0, 5, 20 }, -12, { 1, 0, 0 }, Blue);
 	CreateRampSensors(ramp1, 0.0f, 0, true);//First of the sensor array
 	
+	Cube road1 = CreateRoads({ 20, 5, 160 }, {0, 5, 75}, Grey);
+	Cube road2 = CreateRoads({ 160, 5, 20 }, {-70, 5, 165 }, Grey);
+	Cube road3 = CreateRoads({ 160, 5, 20 }, { -230, 5, 165 }, Grey);
+	Cube road4 = CreateRoads({ 20, 5, 120 }, { -320, 5, 115 }, Grey);
+	Cube road5 = CreateRoads({ 160, 5, 20 }, { -410, 5, 65 }, Grey);
+	
 
-	Cube part1(20, 5, 160);
-	part1.SetPos(0, 5, 75);
-	part1.color = Grey;
-	parts.add(part1);
-
-	Cube part2(160, 5, 20);
-	part2.SetPos(-70, 5, 165);
-	part2.color = Grey;
-	parts.add(part2);
-
-	Cube part3(160, 5, 20);
-	part3.SetPos(-230, 5, 165);
-	part3.color = Grey;
-	parts.add(part3);
-
-	Cube part4(20, 5, 120);
-	part4.SetPos(-320, 5, 115);
-	part4.color = Grey;
-	parts.add(part4);
-
-	Cube part5(160, 5, 20);
-	part5.SetPos(-410, 5, 65);
-	part5.color = Grey;
-	parts.add(part5);
-
-	//Cube ramp1(20, 3, 30);
-	//ramp1.SetPos(0, 5, 20);
-	//ramp1.SetRotation(-12, vec3(1, 0, 0));
-	//ramp1.color = Blue;
-	//parts.add(ramp1);//adding ramp to the list
 }

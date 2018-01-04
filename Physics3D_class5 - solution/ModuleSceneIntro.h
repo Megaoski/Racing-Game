@@ -22,7 +22,8 @@ public:
 	bool CleanUp();
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
-	Cube CreateRamps(float w, float h, float d, float x, float y, float z, float angle, const vec3 &u, Color color);
+	Cube CreateRamps(vec3 measures, vec3 position, float angle, const vec3 &u, Color color);
+	Cube CreateRoads(vec3 measures, vec3 position, Color color);
 	void CreateRampSensors(Cube& cube, float mass, uint i, bool set_the_sensor);
 	/*void CreateExternalSensors();*/
 	void VehicleHasFallen();
