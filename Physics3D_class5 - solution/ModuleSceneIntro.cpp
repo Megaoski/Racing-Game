@@ -41,10 +41,10 @@ bool ModuleSceneIntro::Start()
 		App->physics->AddBody(item->data, 0);
 	}
 
-	for (p2List_item<Cube>* item = ramps.getFirst(); item; item = item->next)
+	/*for (p2List_item<Cube>* item = ramps.getFirst(); item; item = item->next)
 	{
 		App->physics->AddBody(item->data, 0);
-	}
+	}*/
 
 	
 	return ret;
@@ -72,13 +72,15 @@ update_status ModuleSceneIntro::Update(float dt)
 	for (p2List_item<Cube>* item = parts.getFirst(); item; item = item->next)
 	{
 		item->data.Render();
+		LOG("PINTA LAS ROADS");
 	}
 	
-	for (p2List_item<Cube>* item = ramps.getFirst(); item; item = item->next)
+	/*for (p2List_item<Cube>* item = ramps.getFirst(); item; item = item->next)
 	{
-		LOG("PINTA LA RAMPA");
+		
 		item->data.Render();
-	}
+		LOG("PINTA LA RAMPA");
+	}*/
 	
 	
 
@@ -105,6 +107,7 @@ void ModuleSceneIntro::CreateMap()//need to minimize this function
 
 	//Cube ramp1 = CreateRamps(20, 3, 30, 0, 5, 20, -12, (1, 0, 0), Blue);
 	//CreateRampSensors(ramp1, 0.0f, 0, true);//First of the sensor array
+	CreateRamps();
 
 	Cube part1(20, 5, 160);
 	part1.SetPos(0, 5, 75);
@@ -131,7 +134,11 @@ void ModuleSceneIntro::CreateMap()//need to minimize this function
 	part5.color = Grey;
 	parts.add(part5);
 	
-	
+	//Cube ramp1(20, 3, 30);
+	//ramp1.SetPos(0, 5, 20);
+	//ramp1.SetRotation(-12, vec3(1, 0, 0));
+	//ramp1.color = Blue;
+	//parts.add(ramp1);//adding ramp to the list
 }
 
 void ModuleSceneIntro::CreateRamps(/*float w, float h, float d, float x, float y, float z, int angle, vec3 rotation, Color color*/)
@@ -140,7 +147,7 @@ void ModuleSceneIntro::CreateRamps(/*float w, float h, float d, float x, float y
 	ramp1.SetPos(0, 5, 20);
 	ramp1.SetRotation(-12, vec3(1, 0, 0));
 	ramp1.color = Blue;
-	ramps.add(ramp1);//adding ramp to the list
+	parts.add(ramp1);//adding ramp to the list
 	CreateRampSensors(ramp1, 0, 0, true);
 	/*LOG("CREA LA RAMPA");
 	Cube example(w, h, d);
@@ -161,11 +168,11 @@ void ModuleSceneIntro::CreateRampSensors(Cube& cube, float mass, uint i, bool se
 	sensors[i]->collision_listeners.add(this);
 }
 
-void ModuleSceneIntro::CreateExternalSensors()
-{
-	
-
-}
+//void ModuleSceneIntro::CreateExternalSensors()
+//{
+//	
+//
+//}
 
 void ModuleSceneIntro::VehicleHasFallen()
 {

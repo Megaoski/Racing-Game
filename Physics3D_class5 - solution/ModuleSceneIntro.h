@@ -25,7 +25,7 @@ public:
 	void CreateMap();
 	/*Cube*/ void CreateRamps(/*float w, float h, float d, float x, float y, float z, int angle, vec3 rotation, Color color*/);
 	void CreateRampSensors(Cube& cube, float mass, uint i, bool set_the_sensor);
-	void CreateExternalSensors();
+	/*void CreateExternalSensors();*/
 	void VehicleHasFallen();
 	void Turbo();
 
@@ -44,9 +44,9 @@ public:
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
 
-	//-----------------------------
+	
 	p2List<Cube> parts;
-	p2List<Cube> ramps;
+	/*p2List<Cube> ramps;*/
 	
 
 	PhysBody3D* sensors[10]; // array para los sensores de las rampas
