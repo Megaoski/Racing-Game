@@ -25,15 +25,6 @@ bool ModuleSceneIntro::Start()
 	bool ret = true;
 	
 	CreateMap();
-
-	//Creating the big ground sensor NEEDS TO BE IN ANOTHER FUNCTION TO BE CLEAN
-	bigsensorino.size = vec3(1000, 1, 1300);
-	bigsensorino.SetPos(22,0,60);
-
-	bigsensor = App->physics->AddBody(bigsensorino, 0.0f);
-	bigsensor->SetAsSensor(true);
-	bigsensor->collision_listeners.add(this);
-
 	
 	for (p2List_item<Cube>* item = parts.getFirst(); item; item = item->next)
 	{
@@ -56,13 +47,6 @@ bool ModuleSceneIntro::CleanUp()
 // Update
 update_status ModuleSceneIntro::Update(float dt)
 {
-	/*Plane p(0, 1, 0, 0);
-	p.axis = true;
-	p.Render();
-*/
-	bigsensorino.color = Red;//Comment to hide the big sensor
-	bigsensorino.Render();
-
 
 	for (p2List_item<Cube>* item = parts.getFirst(); item; item = item->next)
 	{
@@ -77,12 +61,12 @@ update_status ModuleSceneIntro::Update(float dt)
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 	/*LOG("HIT!");*/
-	if (bigsensor == body1)
+	if (sensors[0] == body1)
 	{
 		VehicleHasFallen();
 	}
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 1; i < 10; i++)
 	{
 		if (sensors[i] == body1)
 		{
@@ -125,11 +109,17 @@ Cube ModuleSceneIntro::CreateRoads(vec3 measures, vec3 position, Color color)
 	return example;
 }
 
-//void ModuleSceneIntro::CreateExternalSensors()
-//{
-//	
-//
-//}
+void ModuleSceneIntro::CreateExternalSensors(Cube& cube, float mass, uint i, bool set_the_sensor, Color color)
+{
+
+	cube.color = color;
+	parts.add(cube);
+
+	sensors[i] = App->physics->AddBody(cube, mass);
+	sensors[i]->SetAsSensor(set_the_sensor);
+	sensors[i]->collision_listeners.add(this);
+
+}
 
 void ModuleSceneIntro::VehicleHasFallen()
 {
@@ -151,10 +141,13 @@ void ModuleSceneIntro::Turbo()
 
 void ModuleSceneIntro::CreateMap()//need to minimize this function
 {
+	Cube bigsensor(1000, 1, 1300);
+	bigsensor.SetPos(22, 0, 60);
+	CreateExternalSensors(bigsensor, 0.0f, 0, true, Red);//using the first memeber of the sensors array. Use NoColor in case we want to hide it
 
 	Cube ramp1 = CreateRamps({ 20, 3, 30 }, { 0, 5, 20 }, -12, { 1, 0, 0 }, Blue);
-	CreateRampSensors(ramp1, 0.0f, 0, true);//First of the sensor array
-	
+	CreateRampSensors(ramp1, 0.0f, 1, true);//First after the big sensor
+
 	Cube road1 = CreateRoads({ 20, 5, 160 }, {0, 5, 75}, Grey);
 	Cube road2 = CreateRoads({ 160, 5, 20 }, {-70, 5, 165 }, Grey);
 	Cube road3 = CreateRoads({ 160, 5, 20 }, { -230, 5, 165 }, Grey);
