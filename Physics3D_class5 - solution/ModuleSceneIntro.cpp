@@ -23,14 +23,10 @@ bool ModuleSceneIntro::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
-
 	
-
 	CreateMap();
-	CreateRamps();
-	
 
-	//Creating the big ground sensor 
+	//Creating the big ground sensor NEEDS TO BE IN ANOTHER FUNCTION TO BE CLEAN
 	bigsensorino.size = vec3(1000, 1, 1300);
 	bigsensorino.SetPos(22,0,60);
 
@@ -51,7 +47,6 @@ bool ModuleSceneIntro::Start()
 	}
 
 	
-
 	return ret;
 }
 
@@ -81,6 +76,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	
 	for (p2List_item<Cube>* item = ramps.getFirst(); item; item = item->next)
 	{
+		LOG("PINTA LA RAMPA");
 		item->data.Render();
 	}
 	
@@ -104,8 +100,12 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 }
 
 
-void ModuleSceneIntro::CreateMap()
+void ModuleSceneIntro::CreateMap()//need to minimize this function
 {
+
+	//Cube ramp1 = CreateRamps(20, 3, 30, 0, 5, 20, -12, (1, 0, 0), Blue);
+	//CreateRampSensors(ramp1, 0.0f, 0, true);//First of the sensor array
+
 	Cube part1(20, 5, 160);
 	part1.SetPos(0, 5, 75);
 	part1.color = Grey;
@@ -131,27 +131,34 @@ void ModuleSceneIntro::CreateMap()
 	part5.color = Grey;
 	parts.add(part5);
 	
-
+	
 }
 
-void ModuleSceneIntro::CreateRamps()
+void ModuleSceneIntro::CreateRamps(/*float w, float h, float d, float x, float y, float z, int angle, vec3 rotation, Color color*/)
 {
 	Cube ramp1(20, 3, 30);
 	ramp1.SetPos(0, 5, 20);
 	ramp1.SetRotation(-12, vec3(1, 0, 0));
 	ramp1.color = Blue;
 	ramps.add(ramp1);//adding ramp to the list
-	CreateRampSensors(ramp1);
+	CreateRampSensors(ramp1, 0, 0, true);
+	/*LOG("CREA LA RAMPA");
+	Cube example(w, h, d);
+	example.SetPos(x, y, z);
+	example.SetRotation(angle,(rotation.x, rotation.y, rotation.z));
+	example.color = color;
+	ramps.add(example);*/
 
+	/*App->physics->AddBody(example, 0);*/
 	
-	
+	/*return example;*/
 }
 
-void ModuleSceneIntro::CreateRampSensors(Cube& cube)
+void ModuleSceneIntro::CreateRampSensors(Cube& cube, float mass, uint i, bool set_the_sensor)
 {
-	sensors[0] = App->physics->AddBody(cube, 0.0f);
-	sensors[0]->SetAsSensor(true);
-	sensors[0]->collision_listeners.add(this);
+	sensors[i] = App->physics->AddBody(cube, mass);
+	sensors[i]->SetAsSensor(set_the_sensor);
+	sensors[i]->collision_listeners.add(this);
 }
 
 void ModuleSceneIntro::CreateExternalSensors()
@@ -177,3 +184,4 @@ void ModuleSceneIntro::Turbo()
 	App->player->vehicle->body->setLinearVelocity(btVector3(0, 10, 30));
 	App->player->vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
 }
+

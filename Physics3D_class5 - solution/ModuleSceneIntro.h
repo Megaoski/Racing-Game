@@ -23,8 +23,8 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	void CreateMap();
-	void CreateRamps();
-	void CreateRampSensors(Cube& cube);
+	/*Cube*/ void CreateRamps(/*float w, float h, float d, float x, float y, float z, int angle, vec3 rotation, Color color*/);
+	void CreateRampSensors(Cube& cube, float mass, uint i, bool set_the_sensor);
 	void CreateExternalSensors();
 	void VehicleHasFallen();
 	void Turbo();
