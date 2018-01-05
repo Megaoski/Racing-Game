@@ -138,15 +138,6 @@ update_status ModulePlayer::Update(float dt)
 		brake = BRAKE_POWER;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
-	{
-		jump = true;
-	}
-	else if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
-	{
-		jump = false;
-	}
-
 
 	if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN) //changing camera view
 	{
@@ -161,9 +152,12 @@ update_status ModulePlayer::Update(float dt)
 		}
 	}
 	
-	if (vehicle->GetPos().y < 0)
+	if (jump)
 	{
+		vehicle->body->setLinearVelocity(btVector3(-35, 20, 0));
+		vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
 		
+		jump = false;
 	}
 
 	vehicle->ApplyEngineForce(acceleration);

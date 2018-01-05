@@ -52,10 +52,10 @@ update_status ModuleSceneIntro::Update(float dt)
 	for (p2List_item<Cube>* item = parts.getFirst(); item; item = item->next)
 	{
 		item->data.Render();
-		LOG("PINTA LAS ROADS");
+		/*LOG("PINTA LAS ROADS");*/
 	}
 		
-
+	
 	return UPDATE_CONTINUE;
 }
 
@@ -67,10 +67,19 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		VehicleHasFallen();
 	}
 
-	if (sensors[1] == body1 && App->player->jump == true)
+	if (body1->type == Turbo && body2 == pb_wheel2)
 	{
-		Turbo();
+		App->player->jump = true;
+		LOG("HIT!");
 	}
+	
+	/*for (int i = 1; i < 10; i++)
+	{
+		if (sensors[i] == body1 && App->player->jump == true)
+		{
+			Turbo();
+		}
+	}*/
 	
 }
 
@@ -82,7 +91,7 @@ Cube ModuleSceneIntro::CreateRamps(vec3 measures, vec3 position, float angle, co
 	example.SetRotation(angle, u);
 	example.color = color;
 	parts.add(example);
-	LOG("CREA LA RAMPA");
+	/*LOG("CREA LA RAMPA");*/
 	
 
 	return example;
@@ -91,23 +100,23 @@ Cube ModuleSceneIntro::CreateRamps(vec3 measures, vec3 position, float angle, co
 }
 
 
-//Cube ModuleSceneIntro::CreateRoadSensors(Cube& cube, vec3 position, float mass, uint i, bool set_the_sensor, Color color)
-//{
-//	Cube example(30, 5, 20);
-//	example.SetPos(position.x, position.y, position.z);
-//	example.color = color;
-//	parts.add(example);
-//
-//	cube.size(30, 5, 20);
-//
-//	body_sensor = App->physics->AddBody(example, mass);
-//	body_sensor->SetAsSensor(set_the_sensor);
-//	body_sensor->collision_listeners.add(this);
-//
-//	turbos.PushBack(body_sensor);
-//
-//	return example;
-//}
+Cube ModuleSceneIntro::CreateRoadSensors(vec3 measures, vec3 position, Color color)
+{
+	Cube example(measures.x, measures.y, measures.z);
+	example.SetPos(position.x, position.y, position.z);
+	example.color = color;
+	parts.add(example);
+
+	
+	PhysBody3D* pbody = App->physics->AddBody(example, 0, Type::Turbo);
+	pbody->SetAsSensor(true);
+	pbody->collision_listeners.add(this);
+	
+
+	
+
+	return example;
+}
 
 Cube ModuleSceneIntro::CreateRoads(vec3 measures, vec3 position, Color color)
 {
@@ -143,12 +152,6 @@ void ModuleSceneIntro::VehicleHasFallen()
 	
 }
 
-void ModuleSceneIntro::Turbo()
-{
-	App->player->vehicle->body->setLinearVelocity(btVector3(-30, 20, 0));
-	App->player->vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
-	
-}
 
 
 void ModuleSceneIntro::CreateMap()//need to minimize this function
@@ -157,9 +160,14 @@ void ModuleSceneIntro::CreateMap()//need to minimize this function
 	bigsensor.SetPos(22, 0, 60);
 	CreateExternalSensors(bigsensor, 0.0f, 0, true, Red);//using the first member of the sensors array. Use NoColor in case we want to hide it
 
-	Cube firstturbo(40, 5, 20);
+	/*Cube firstturbo(40, 5, 20);
 	firstturbo.SetPos(-115, 5, 165);
-	CreateExternalSensors(firstturbo, 0.0f, 1, true, Green);
+	CreateExternalSensors(firstturbo, 0.0f, 1, true, Green);*/
+	Cube firstturbo = CreateRoadSensors({ 40, 5, 20 }, {-115, 5, 165}, Green);
+
+	Cube secondturbo(20, 5, 40);
+	secondturbo.SetPos(-200, 5, 220);
+	CreateExternalSensors(secondturbo, 0.0f, 2, true, Green);
 
 	Cube ramp1 = CreateRamps({ 20, 3, 20 }, { 20, 10, 20 }, -12, { 1, 0, 0 }, Blue);
 	//CreateRoadSensors(ramp1, 0.0f, 1, true);//First after the big sensor
@@ -173,7 +181,7 @@ void ModuleSceneIntro::CreateMap()//need to minimize this function
 	Cube road5 = CreateRoads({ 160, 5, 20 }, { -410, 5, 65 }, Grey);
 	Cube road6 = CreateRoads({ 20, 5, 300 }, { -500, 5, 205 }, Grey);
 	Cube road7 = CreateRoads({ 300, 5, 20 }, { -360, 5, 365 }, Grey);
-	Cube road8 = CreateRoads({ 20, 5, 170 }, { -200, 5, 290 }, Grey);
+	Cube road8 = CreateRoads({ 20, 5, 135 }, { -200, 5, 310 }, Grey);
 	Cube road9 = CreateRoads({20, 5, 250}, {-200, 5, 0}, Grey);
 	Cube road10 = CreateRoads({160, 5, 20}, {-100, 5, -100}, Grey);
 	
