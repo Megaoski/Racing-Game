@@ -6,6 +6,7 @@
 #include "ModulePhysics3D.h"
 #include "ModulePlayer.h"
 #include "PhysVehicle3D.h"
+#include "ModuleAudio.h"
 
 
 #define SIZE_ARRAY(_A_) (sizeof(_A_)/sizeof(_a_[0]))
@@ -31,7 +32,7 @@ bool ModuleSceneIntro::Start()
 		App->physics->AddBody(item->data, 0);
 	}
 
-	
+	App->audio->PlayMusic("music/freestyla.ogg");
 	
 	return ret;
 }
@@ -153,6 +154,9 @@ void ModuleSceneIntro::CreateMap()//need to minimize this function
 	Cube road3 = CreateRoads({ 160, 5, 20 }, { -230, 5, 165 }, Grey);
 	Cube road4 = CreateRoads({ 20, 5, 120 }, { -320, 5, 115 }, Grey);
 	Cube road5 = CreateRoads({ 160, 5, 20 }, { -410, 5, 65 }, Grey);
+	Cube road6 = CreateRoads({ 20, 5, 300 }, { -500, 5, 205 }, Grey);
+	Cube road7 = CreateRoads({ 300, 5, 20 }, { -360, 5, 365 }, Grey);
+	Cube road8 = CreateRoads({ 20, 5, 170 }, { -200, 5, 290 }, Grey);
 	
 
 }
