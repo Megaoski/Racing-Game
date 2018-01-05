@@ -138,6 +138,16 @@ update_status ModulePlayer::Update(float dt)
 		brake = BRAKE_POWER;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
+	{
+		jump = true;
+	}
+	else if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_UP)
+	{
+		jump = false;
+	}
+
+
 	if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN) //changing camera view
 	{
 		

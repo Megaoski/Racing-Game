@@ -24,7 +24,7 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	Cube CreateRamps(vec3 measures, vec3 position, float angle, const vec3 &u, Color color);
 	Cube CreateRoads(vec3 measures, vec3 position, Color color);
-	void CreateRampSensors(Cube& cube, float mass, uint i, bool set_the_sensor);
+	/*Cube CreateRoadSensors(Cube& cube, vec3 position, float mass, uint i, bool set_the_sensor, Color color);*/
 	void CreateExternalSensors(Cube& cube, float mass, uint i, bool set_the_sensor, Color color);
 	void VehicleHasFallen();
 	void Turbo();
@@ -48,12 +48,8 @@ public:
 	
 	p2List<Cube> parts;
 	
-	
 
 	PhysBody3D* sensors[10]; // array para los sensores de las rampas
-
-	/*Cube bigsensorino;
-	PhysBody3D* bigsensor;*/
 
 	
 	
