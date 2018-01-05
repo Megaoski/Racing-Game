@@ -220,7 +220,7 @@ PhysBody3D* ModulePhysics3D::AddBody(const Sphere& sphere, float mass)
 
 
 // ---------------------------------------------------------
-PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass)
+PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass, Type type )
 {
 	btCollisionShape* colShape = new btBoxShape(btVector3(cube.size.x*0.5f, cube.size.y*0.5f, cube.size.z*0.5f));
 	shapes.add(colShape);
@@ -239,7 +239,7 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass)
 	btRigidBody* body = new btRigidBody(rbInfo);
 	PhysBody3D* pbody = new PhysBody3D(body);
 
-	
+	pbody->type = type;
 
 
 	
@@ -249,6 +249,7 @@ PhysBody3D* ModulePhysics3D::AddBody(const Cube& cube, float mass)
 
 	return pbody;
 }
+
 
 // ---------------------------------------------------------
 PhysBody3D* ModulePhysics3D::AddBody(const Cylinder& cylinder, float mass)

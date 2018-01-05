@@ -9,6 +9,7 @@ struct PhysVehicle3D;
 #define TURN_DEGREES 15.0f * DEGTORAD
 #define BRAKE_POWER 1000.0f
 
+
 class ModulePlayer : public Module
 {
 public:
@@ -18,12 +19,14 @@ public:
 	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();
+	
 
 public:
-
+	vec3 initial_pos;//Initial position for the vehicle
 	PhysVehicle3D* vehicle;
 	float turn;
 	float acceleration;
 	float brake;
 	int cameracounter = 0;
+	bool jump = false;
 };

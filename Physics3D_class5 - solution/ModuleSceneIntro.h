@@ -4,10 +4,12 @@
 #include "Globals.h"
 #include "Primitive.h"
 
-#define MAX_SNAKE 2
+
+
 
 struct PhysBody3D;
 struct PhysMotor3D;
+
 
 class ModuleSceneIntro : public Module
 {
@@ -20,7 +22,12 @@ public:
 	bool CleanUp();
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
-	void CreateMap(vec3 pos);
+	Cube CreateRamps(vec3 measures, vec3 position, float angle, const vec3 &u, Color color);
+	Cube CreateRoads(vec3 measures, vec3 position, Color color);
+	Cube CreateRoadSensors(vec3 measures, vec3 position, Color color);
+	void CreateExternalSensors(Cube& cube, float mass, uint i, bool set_the_sensor, Color color);
+	void VehicleHasFallen();
+	void CreateMap();
 
 public:
 	
@@ -37,5 +44,15 @@ public:
 	PhysMotor3D* left_wheel;
 	PhysMotor3D* right_wheel;
 
+	
 	p2List<Cube> parts;
+
+	
+	
+
+	PhysBody3D* sensors[10]; // array para los sensores de las rampas
+
+	
+	
+
 };

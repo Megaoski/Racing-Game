@@ -18,6 +18,7 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
+	initial_pos = { 0, 17, 0};
 	VehicleInfo car;
 
 	// Car properties ----------------------------------------
@@ -95,9 +96,9 @@ bool ModulePlayer::Start()
 	car.wheels[3].drive = false;
 	car.wheels[3].brake = true;
 	car.wheels[3].steering = false;
-
+	
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 12, 0);
+	vehicle->SetPos(initial_pos.x,initial_pos.y, initial_pos.z);
 	
 	return true;
 }
@@ -137,6 +138,7 @@ update_status ModulePlayer::Update(float dt)
 		brake = BRAKE_POWER;
 	}
 
+
 	if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN) //changing camera view
 	{
 		
@@ -150,6 +152,13 @@ update_status ModulePlayer::Update(float dt)
 		}
 	}
 	
+	if (jump)
+	{
+		vehicle->body->setLinearVelocity(btVector3(-35, 20, 0));
+		vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
+		
+		jump = false;
+	}
 
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
@@ -163,6 +172,8 @@ update_status ModulePlayer::Update(float dt)
 
 	return UPDATE_CONTINUE;
 }
+
+
 
 
 
