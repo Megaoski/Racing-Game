@@ -8,11 +8,6 @@
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
 	turn = acceleration = brake = 0.0f;
-	min = 0;
-	live = 3;
-	winmusic = false;
-	endmusic = false;
-	deadplayer = false;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -24,7 +19,6 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 
 	initial_pos = { 0, 17, 0};
-	runtime.Start();
 	VehicleInfo car;
 
 	// Car properties ----------------------------------------
@@ -139,9 +133,8 @@ update_status ModulePlayer::Update(float dt)
 
 	turn = acceleration = brake = 0.0f;
 
-	if(!deadplayer)
+	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
-<<<<<<< HEAD
 		acceleration = MAX_ACCELERATION;
 	}
 
@@ -168,44 +161,18 @@ update_status ModulePlayer::Update(float dt)
 		acceleration = -MAX_ACCELERATION;
 	}
 
-=======
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+
+	if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN) //changing camera view
+	{
+		
+		App->camera->test = false;
+		cameracounter++;
+
+		if (cameracounter == 2)
 		{
-			acceleration = MAX_ACCELERATION;
+			App->camera->test = true;
+			cameracounter = 0;
 		}
-
-		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		{
-			if (turn < TURN_DEGREES)
-				turn += TURN_DEGREES;
-		}
-
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		{
-			if (turn > -TURN_DEGREES)
-				turn -= TURN_DEGREES;
-		}
-
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		{
-			brake = BRAKE_POWER;
-		}
->>>>>>> d4a5545195b84cd2f6f299d2ce37ff00e809396a
-
-
-		if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN) //changing camera view
-		{
-
-			App->camera->test = false;
-			cameracounter++;
-
-			if (cameracounter == 2)
-			{
-				App->camera->test = true;
-				cameracounter = 0;
-			}
-		}
-
 	}
 	
 	
@@ -216,54 +183,14 @@ update_status ModulePlayer::Update(float dt)
 
 	vehicle->Render();
 
-	if ((int)runtime.ReadSec() == 60)
-	{
-		min++;
-		runtime.Start();
-	}
-
-	if (live == 0)
-	{
-		EndRun();
-	}
-
-
-
 	char title[80];
-
-	if (!deadplayer)
-	{
-		sprintf_s(title, "%.1f Km/h      Time: %i : %i       HP: %i  ", vehicle->GetKmh(), min, (int)runtime.ReadSec(), live);
-		App->window->SetTitle(title);
-	}
-	
-	else
-	{
-		runtime.Stop(); //porque no para?
-		
-		sprintf_s(title, "%.1f Km/h      Total Time: %i : %i       HP: %i  ", vehicle->GetKmh(), min, total_time, live);
-		App->window->SetTitle(title);
-	}
-	
+	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
+	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
 }
 
 
-void ModulePlayer::EndRun()
-{
-	
-	deadplayer = true;
-	
-	/*endmusic = true;*/
-	
-}
-
-void ModulePlayer::NewRun()
-{
-	live = 3;
-
-}
 
 
 
