@@ -9,6 +9,11 @@ struct PhysVehicle3D;
 #define TURN_DEGREES 15.0f * DEGTORAD
 #define BRAKE_POWER 1000.0f
 
+struct Turbos
+{
+	Cube cube;
+	PhysBody3D* body;
+};
 
 class ModulePlayer : public Module
 {
@@ -28,5 +33,10 @@ public:
 	float acceleration;
 	float brake;
 	int cameracounter = 0;
-	bool jump = false;
+	
+
+	p2List<Turbos> turbos; //for render
+
+	Turbos FirstTurbo;
+	Turbos DeadFloor;
 };

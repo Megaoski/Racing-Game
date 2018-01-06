@@ -7,11 +7,7 @@
 class btRigidBody;
 class Module;
 
-enum Type
-{
-	Normal = 0,
-	Turbo
-};
+
 
 // =================================================
 struct PhysBody3D
@@ -35,7 +31,7 @@ private:
 public:
 	p2List<Module*> collision_listeners;
 	btRigidBody* body = nullptr;
-	Type type = Normal;
+	
 };
 
 #endif // __PhysBody3D_H__

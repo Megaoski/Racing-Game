@@ -99,6 +99,7 @@ bool ModulePlayer::Start()
 	
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(initial_pos.x,initial_pos.y, initial_pos.z);
+	vehicle->collision_listeners.add(this);
 	
 	return true;
 }
@@ -114,6 +115,14 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
+
+	p2List_item<Turbos>* item = turbos.getFirst();
+	while (item)
+	{
+		item->data.cube.Render();
+		item = item->next;
+	}
+
 	turn = acceleration = brake = 0.0f;
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
@@ -152,13 +161,7 @@ update_status ModulePlayer::Update(float dt)
 		}
 	}
 	
-	if (jump)
-	{
-		vehicle->body->setLinearVelocity(btVector3(-35, 20, 0));
-		vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
-		
-		jump = false;
-	}
+	
 
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);

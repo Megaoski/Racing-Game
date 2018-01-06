@@ -29,7 +29,7 @@ bool ModuleSceneIntro::Start()
 	
 	for (p2List_item<Cube>* item = parts.getFirst(); item; item = item->next)
 	{
-		App->physics->AddBody(item->data, 0);
+		App->physics->AddBody(item->data, 0.0f, false);
 	}
 
 	App->audio->PlayMusic("music/freestyla.ogg");
@@ -61,25 +61,17 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	/*LOG("HIT!");*/
-	if (sensors[0] == body1)
+
+	if (body1 == App->player->FirstTurbo.body)
+	{
+		App->player->vehicle->body->setLinearVelocity(btVector3(-35, 20, 0));
+		App->player->vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
+	}
+
+	if (body1 == App->player->DeadFloor.body)
 	{
 		VehicleHasFallen();
 	}
-
-	if (body1->type == Turbo && body2 == pb_wheel2)
-	{
-		App->player->jump = true;
-		LOG("HIT!");
-	}
-	
-	/*for (int i = 1; i < 10; i++)
-	{
-		if (sensors[i] == body1 && App->player->jump == true)
-		{
-			Turbo();
-		}
-	}*/
 	
 }
 
@@ -105,12 +97,16 @@ Cube ModuleSceneIntro::CreateRoadSensors(vec3 measures, vec3 position, Color col
 	Cube example(measures.x, measures.y, measures.z);
 	example.SetPos(position.x, position.y, position.z);
 	example.color = color;
-	parts.add(example);
+	
+
+	App->player->FirstTurbo.cube = example;
+	App->player->FirstTurbo.body = App->physics->AddBody(example, 0, true);
+	App->player->FirstTurbo.body->collision_listeners.add(this);
+	App->player->turbos.add(App->player->FirstTurbo);
+
 
 	
-	PhysBody3D* pbody = App->physics->AddBody(example, 0, Type::Turbo);
-	pbody->SetAsSensor(true);
-	pbody->collision_listeners.add(this);
+	
 	
 
 	
@@ -128,16 +124,22 @@ Cube ModuleSceneIntro::CreateRoads(vec3 measures, vec3 position, Color color)
 	return example;
 }
 
-void ModuleSceneIntro::CreateExternalSensors(Cube& cube, float mass, uint i, bool set_the_sensor, Color color)
+Cube ModuleSceneIntro::CreateExternalSensors(vec3 measures, vec3 position, Color color)
 {
 
-	cube.color = color;
-	parts.add(cube);
+	Cube example(measures.x, measures.y, measures.z);
+	example.SetPos(position.x, position.y, position.z);
+	example.color = color;
 
-	sensors[i] = App->physics->AddBody(cube, mass);
-	sensors[i]->SetAsSensor(set_the_sensor);
-	sensors[i]->collision_listeners.add(this);
 
+	App->player->DeadFloor.cube = example;
+	App->player->DeadFloor.body = App->physics->AddBody(example, 0, true);
+	App->player->DeadFloor.body->collision_listeners.add(this);
+	App->player->turbos.add(App->player->DeadFloor);
+
+	
+
+	return example;
 }
 
 void ModuleSceneIntro::VehicleHasFallen()
@@ -154,23 +156,18 @@ void ModuleSceneIntro::VehicleHasFallen()
 
 
 
-void ModuleSceneIntro::CreateMap()//need to minimize this function
+void ModuleSceneIntro::CreateMap()
 {
-	Cube bigsensor(1000, 1, 1300);
-	bigsensor.SetPos(22, 0, 60);
-	CreateExternalSensors(bigsensor, 0.0f, 0, true, Red);//using the first member of the sensors array. Use NoColor in case we want to hide it
+	
+	Cube bigsensor = CreateExternalSensors({ 1000, 1, 1300 }, { 22, 0, 60 }, Red);// Use NoColor in case we want to hide it
 
-	/*Cube firstturbo(40, 5, 20);
-	firstturbo.SetPos(-115, 5, 165);
-	CreateExternalSensors(firstturbo, 0.0f, 1, true, Green);*/
+	
 	Cube firstturbo = CreateRoadSensors({ 40, 5, 20 }, {-115, 5, 165}, Green);
 
-	Cube secondturbo(20, 5, 40);
-	secondturbo.SetPos(-200, 5, 220);
-	CreateExternalSensors(secondturbo, 0.0f, 2, true, Green);
+	
 
 	Cube ramp1 = CreateRamps({ 20, 3, 20 }, { 20, 10, 20 }, -12, { 1, 0, 0 }, Blue);
-	//CreateRoadSensors(ramp1, 0.0f, 1, true);//First after the big sensor
+	
 
 	
 	
