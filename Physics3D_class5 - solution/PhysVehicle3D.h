@@ -2,6 +2,7 @@
 
 #include "PhysBody3D.h"
 #include "glmath.h"
+#include "Primitive.h"
 
 class btRaycastVehicle;
 struct PhysBody3D;
@@ -28,6 +29,12 @@ struct VehicleInfo
 	vec3 chassis_offset;
 	vec3 front_size;	//front part of the car
 	vec3 front_offset;
+	vec3 left_backlight_size;		//left light on the back part of the car
+	vec3 left_backlight_offset;
+	vec3 right_backlight_size;		//right light on the back part of the car
+	vec3 right_backlight_offset;
+	vec3 back_size;
+	vec3 back_offset;
 
 	float mass;
 	float suspensionStiffness; // default to 5.88 / 10.0 offroad / 50.0 sports car / 200.0 F1 car
@@ -53,7 +60,7 @@ public:
 	void Brake(float force);
 	void Turn(float degrees);
 	float GetKmh() const;
-	/*vec3 GetPosition() const;*/
+	vec3 GetPosition() const;
 
 public:
 

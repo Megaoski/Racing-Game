@@ -22,11 +22,17 @@ bool ModulePlayer::Start()
 	VehicleInfo car;
 
 	// Car properties ----------------------------------------
-	car.chassis_size.Set(2, 2, 4);
-	car.chassis_offset.Set(0, 1.5, 0);
-	car.mass = 500.0f;
-	car.front_size.Set(2, 1, 2);
-	car.front_offset.Set(0, 1, 2.75);
+	car.chassis_size.Set(2, 2, 5);
+	car.chassis_offset.Set(0, 1, 0);
+	car.front_size.Set(1.6f, 1.6f, 1.2f);
+	car.front_offset.Set(0, 1, 4);
+	car.back_size.Set(2, 1, 2.2f);
+	car.back_offset.Set(0, 1, -2);
+	car.left_backlight_size.Set(0.5f, 0.4f, 0.4f);
+	car.left_backlight_offset.Set(0.75f, 0.8f, -3);
+	car.right_backlight_size.Set(0.5f, 0.4f, 0.4f);
+	car.right_backlight_offset.Set(-0.75f, 0.8f, -3);
+	car.mass = 300.0f;
 	car.suspensionStiffness = 15.88f;
 	car.suspensionCompression = 0.83f;
 	car.suspensionDamping = 0.88f;
@@ -35,9 +41,9 @@ bool ModulePlayer::Start()
 	car.maxSuspensionForce = 6000.0f;
 
 	// Wheel properties ---------------------------------------
-	float connection_height = 1.2f;
-	float wheel_radius = 0.6f;
-	float wheel_width = 0.5f;
+	float connection_height = 1.6f;
+	float wheel_radius = 0.8f;
+	float wheel_width = 1.2f;
 	float suspensionRestLength = 1.2f;
 
 	// Don't change anything below this line ------------------
@@ -134,19 +140,25 @@ update_status ModulePlayer::Update(float dt)
 
 	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
-		if(turn < TURN_DEGREES)
+		//if(turn < TURN_DEGREES)
 			turn +=  TURN_DEGREES;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
-		if(turn > -TURN_DEGREES)
+		//if(turn > -TURN_DEGREES)
 			turn -= TURN_DEGREES;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
 	{
 		brake = BRAKE_POWER;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	{
+
+		acceleration = -MAX_ACCELERATION;
 	}
 
 

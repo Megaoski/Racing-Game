@@ -64,6 +64,45 @@ void PhysVehicle3D::Render()
 	front.transform.M[14] += offset_f.getZ();
 	
 	front.Render();
+
+	Cube back1(info.left_backlight_size.x, info.left_backlight_size.y, info.left_backlight_size.z);
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&back1.transform);
+	back1.color = Red;
+	btQuaternion q_b1 = vehicle->getChassisWorldTransform().getRotation();
+	btVector3 offset_b1(info.left_backlight_offset.x, info.left_backlight_offset.y, info.left_backlight_offset.z);
+	offset_b1 = offset_b1.rotate(q_b1.getAxis(), q_b1.getAngle());
+
+	back1.transform.M[12] += offset_b1.getX();
+	back1.transform.M[13] += offset_b1.getY();
+	back1.transform.M[14] += offset_b1.getZ();
+
+	back1.Render();
+
+	Cube back2(info.right_backlight_size.x, info.right_backlight_size.y, info.right_backlight_size.z);
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&back2.transform);
+	back2.color = Red;
+	btQuaternion q_b2 = vehicle->getChassisWorldTransform().getRotation();
+	btVector3 offset_b2(info.right_backlight_offset.x, info.right_backlight_offset.y, info.right_backlight_offset.z);
+	offset_b2 = offset_b2.rotate(q_b2.getAxis(), q_b2.getAngle());
+
+	back2.transform.M[12] += offset_b2.getX();
+	back2.transform.M[13] += offset_b2.getY();
+	back2.transform.M[14] += offset_b2.getZ();
+
+	back2.Render();
+
+	Cube back(info.back_size.x, info.back_size.y, info.back_size.z);
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&back.transform);
+	back.color = Blue;
+	btQuaternion q_b = vehicle->getChassisWorldTransform().getRotation();
+	btVector3 offset_b(info.back_offset.x, info.back_offset.y, info.back_offset.z);
+	offset_b = offset_b.rotate(q_b.getAxis(), q_b.getAngle());
+
+	back.transform.M[12] += offset_b.getX();
+	back.transform.M[13] += offset_b.getY();
+	back.transform.M[14] += offset_b.getZ();
+
+	back.Render();
 }
 
 // ----------------------------------------------------------------------------
@@ -108,13 +147,13 @@ float PhysVehicle3D::GetKmh() const
 	return vehicle->getCurrentSpeedKmHour();
 }
 
-//vec3 PhysVehicle3D::GetPosition() const {
-//
-//	vec3 ret;
-//
-//	ret.x = ;
-//	ret.y = ;
-//	ret.z = ;
-//
-//	return ret;
-//}
+vec3 PhysVehicle3D::GetPosition() const {
+
+	vec3 ret;
+
+	ret.x = vehicle->getChassisWorldTransform().getOrigin().getX();
+	ret.y = vehicle->getChassisWorldTransform().getOrigin().getY();
+	ret.z = vehicle->getChassisWorldTransform().getOrigin().getZ();
+
+	return ret;
+}
