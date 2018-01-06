@@ -24,7 +24,7 @@ public:
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 	Cube CreateRamps(vec3 measures, vec3 position, float angle, const vec3 &u, Color color);
 	Cube CreateRoads(vec3 measures, vec3 position, Color color);
-	Cube CreateRoadSensors(vec3 measures, vec3 position, Color color);
+	void CreateRoadSensors();
 	Cube CreateExternalSensors(vec3 measures, vec3 position, Color color);
 	void Turbo();
 	void VehicleHasFallen();

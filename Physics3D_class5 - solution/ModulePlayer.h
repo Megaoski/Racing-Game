@@ -31,6 +31,7 @@ public:
 
 public:
 	vec3 initial_pos;//Initial position for the vehicle
+
 	PhysVehicle3D* vehicle;
 	float turn;
 	float acceleration;
@@ -41,6 +42,7 @@ public:
 	p2List<Turbos> turbos; //for render
 
 	Turbos FirstTurbo;
+	Turbos SecondTurbo;
 	Turbos DeadFloor;
 
 	Timer runtime;
