@@ -64,8 +64,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 
 	if (body1 == App->player->FirstTurbo.body)
 	{
-		App->player->vehicle->body->setLinearVelocity(btVector3(-35, 20, 0));
-		App->player->vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
+		Turbo();
 	}
 
 	if (body1 == App->player->DeadFloor.body)
@@ -142,6 +141,13 @@ Cube ModuleSceneIntro::CreateExternalSensors(vec3 measures, vec3 position, Color
 	return example;
 }
 
+void ModuleSceneIntro::Turbo()
+{
+	App->player->vehicle->body->setLinearVelocity(btVector3(-35, 10, 0));
+	App->player->vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
+}
+
+
 void ModuleSceneIntro::VehicleHasFallen()
 {
 	App->player->vehicle->SetTransform(IdentityMatrix.M);
@@ -159,14 +165,12 @@ void ModuleSceneIntro::VehicleHasFallen()
 void ModuleSceneIntro::CreateMap()
 {
 	
-	Cube bigsensor = CreateExternalSensors({ 1000, 1, 1300 }, { 22, 0, 60 }, Red);// Use NoColor in case we want to hide it
-
-	
+	Cube bigsensor = CreateExternalSensors({ 2000, 1, 1600 }, { 22, 0, 60 }, Red);// Use NoColor in case we want to hide it
 	Cube firstturbo = CreateRoadSensors({ 40, 5, 20 }, {-115, 5, 165}, Green);
 
 	
 
-	Cube ramp1 = CreateRamps({ 20, 3, 20 }, { 20, 10, 20 }, -12, { 1, 0, 0 }, Blue);
+	Cube ramp1 = CreateRamps({ 20, 3, 20 }, { 20, 10, 20 }, -12, { 1, 0, 0 }, Blue);//just in case we need ramps
 	
 
 	

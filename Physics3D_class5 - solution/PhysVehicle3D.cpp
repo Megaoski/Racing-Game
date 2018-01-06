@@ -25,7 +25,7 @@ void PhysVehicle3D::Render()
 {
 	Cylinder wheel;
 
-	wheel.color = Blue;
+	wheel.color = Black;
 
 	for(int i = 0; i < vehicle->getNumWheels(); ++i)
 	{
@@ -40,6 +40,7 @@ void PhysVehicle3D::Render()
 
 	Cube chassis(info.chassis_size.x, info.chassis_size.y, info.chassis_size.z);
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&chassis.transform);
+	chassis.color = Blue;
 	btQuaternion q = vehicle->getChassisWorldTransform().getRotation();
 	btVector3 offset(info.chassis_offset.x, info.chassis_offset.y, info.chassis_offset.z);
 	offset = offset.rotate(q.getAxis(), q.getAngle());
@@ -50,6 +51,19 @@ void PhysVehicle3D::Render()
 
 
 	chassis.Render();
+
+	Cube front(info.front_size.x, info.front_size.y, info.front_size.z);
+	vehicle->getChassisWorldTransform().getOpenGLMatrix(&front.transform);
+	front.color = Blue;
+	btQuaternion q_f = vehicle->getChassisWorldTransform().getRotation();
+	btVector3 offset_f(info.front_offset.x, info.front_offset.y, info.front_offset.z);
+	offset_f = offset_f.rotate(q_f.getAxis(), q_f.getAngle());
+	
+	front.transform.M[12] += offset_f.getX();
+	front.transform.M[13] += offset_f.getY();
+	front.transform.M[14] += offset_f.getZ();
+	
+	front.Render();
 }
 
 // ----------------------------------------------------------------------------
@@ -93,3 +107,14 @@ float PhysVehicle3D::GetKmh() const
 {
 	return vehicle->getCurrentSpeedKmHour();
 }
+
+//vec3 PhysVehicle3D::GetPosition() const {
+//
+//	vec3 ret;
+//
+//	ret.x = ;
+//	ret.y = ;
+//	ret.z = ;
+//
+//	return ret;
+//}
