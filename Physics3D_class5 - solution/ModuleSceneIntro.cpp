@@ -32,7 +32,13 @@ bool ModuleSceneIntro::Start()
 		App->physics->AddBody(item->data, 0.0f, false);
 	}
 
-	App->audio->PlayMusic("music/freestyla.ogg");
+	
+	if (App->player->endmusic == false || App->player->winmusic == false)
+	{
+		App->audio->PlayMusic("music/freestyla.ogg");
+	}
+	else
+		App->audio->PlayMusic("music/freestyla.ogg", 0.0f);
 	
 	return ret;
 }
@@ -55,7 +61,7 @@ update_status ModuleSceneIntro::Update(float dt)
 		/*LOG("PINTA LAS ROADS");*/
 	}
 		
-	
+		
 	return UPDATE_CONTINUE;
 }
 
@@ -156,6 +162,8 @@ void ModuleSceneIntro::VehicleHasFallen()
 	App->player->vehicle->body->setLinearVelocity(btVector3(0,0,0));
 	App->player->vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
 	App->player->brake = BRAKE_POWER;
+
+	App->player->live--;
 	
 	
 }
