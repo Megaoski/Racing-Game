@@ -26,7 +26,7 @@ public:
 	Cube CreateRoads(vec3 measures, vec3 position, Color color);
 	void CreateRoadSensors();
 	Cube CreateExternalSensors(vec3 measures, vec3 position, Color color);
-	void Turbo();
+	void Turbo(int num);
 	void VehicleHasFallen();
 	void CreateMap();
 

@@ -70,12 +70,17 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 
 	if (body1 == App->player->FirstTurbo.body)
 	{
-		Turbo();
+		Turbo(1);
+	}
+
+	if (body1 == App->player->SecondTurbo.body)
+	{
+		Turbo(2);
 	}
 
 	if (body1 == App->player->DeadFloor.body)
 	{
-		/*VehicleHasFallen();*/
+		VehicleHasFallen();
 	}
 	
 }
@@ -150,10 +155,18 @@ Cube ModuleSceneIntro::CreateExternalSensors(vec3 measures, vec3 position, Color
 	return example;
 }
 
-void ModuleSceneIntro::Turbo()
+void ModuleSceneIntro::Turbo(int num)
 {
-	App->player->vehicle->body->setLinearVelocity(btVector3(-35, 10, 0));
-	App->player->vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
+	if (num == 1)
+	{
+		App->player->vehicle->body->setLinearVelocity(btVector3(-35, 10, 0));
+		App->player->vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
+	}
+	else if (num == 2)
+	{
+		App->player->vehicle->body->setLinearVelocity(btVector3(0, 15, -50));
+		App->player->vehicle->body->setAngularVelocity(btVector3(0, 0, 0));
+	}
 }
 
 
@@ -196,8 +209,7 @@ void ModuleSceneIntro::CreateMap()
 	Cube road7 = CreateRoads({ 300, 5, 20 }, { -360, 5, 365 }, Grey);
 	Cube road8 = CreateRoads({ 20, 5, 135 }, { -200, 5, 310}, Grey);
 
-	Cube road9 = CreateRoads({20, 5, 250}, {-200, 5, 0}, Grey);
-	Cube road10 = CreateRoads({160, 5, 20}, {-100, 5, -100}, Grey);
-	
+	Cube road9 = CreateRoads({ 20, 5, 250 }, { -200, 5, -10 }, Grey);
+	Cube road10 = CreateRoads({ 160, 5, 20 }, { -110, 5, -125 }, Grey);
 
 }
